@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import AuthenticatedRoute from './components/AuthenticatedRoute';
+import Header from './components/Header';
 import LoginPage from './pages/LoginPage';
 import SearchPage from './pages/SearchPage';
 
@@ -19,6 +20,7 @@ export default function App() {
             <LoginPage />
           </Route>
           <AuthenticatedRoute exact path="/">
+            <Header />
             <SearchPage />
           </AuthenticatedRoute>
           <Route path="*">

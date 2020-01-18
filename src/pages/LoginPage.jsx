@@ -1,11 +1,19 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+
+import AuthService from '../services/AuthService';
 
 const LoginPage = () => {
   const history = useHistory();
+  const location = useLocation();
+  const defaultState = { from: { pathname: '/' } };
+  const { from } = location.state || defaultState;
 
   const login = () => {
-    history.replace('/');
+    AuthService
+      .authenticate()
+      .then(() => history.replace(from))
+      .catch(() => {}); // noop
   };
 
   return (
