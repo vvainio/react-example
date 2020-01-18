@@ -40,7 +40,8 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-// Hook for child components (providers the auth object and auto-updates)
+// The hook to be used in components. Returns the `value` prop set in the `AuthProvider`.
+// The component(s) will automatically re-render when the context value changes.
 const useAuth = () => useContext(AuthContext);
 
 export {
