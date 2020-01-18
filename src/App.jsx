@@ -1,9 +1,26 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
 
-function App() {
+import LoginPage from './pages/LoginPage';
+import SearchPage from './pages/SearchPage';
+
+export default function App() {
   return (
-    <div>Hello world!</div>
+    <Router>
+      <div>
+        <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/">
+            <SearchPage />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
-
-export default App;
