@@ -1,16 +1,22 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import AuthService from '../services/AuthService';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+  const auth = useAuth();
   const history = useHistory();
 
-  const invalidateSession = () => {
-    AuthService
+  const logout = () => {
+    auth
       .signout()
       .then(() => history.push('/login'));
   };
+
+  // Avoid rendering the header for unauthorized users
+  if (!auth.isAuthenticated) {
+    return null;
+  }
 
   return (
     <nav>
@@ -22,7 +28,7 @@ const Header = () => {
           <Link to="/advancedsearch">Advanced search</Link>
         </li>
         <li>
-          <button type="submit" onClick={invalidateSession}>Log out</button>
+          <button type="submit" onClick={logout}>Log out</button>
         </li>
       </ul>
     </nav>

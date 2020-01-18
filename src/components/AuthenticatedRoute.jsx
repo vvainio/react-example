@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 
-import AuthService from '../services/AuthService';
+import { useAuth } from '../context/AuthContext';
 
 const AuthenticatedRoute = ({ children, ...rest }) => {
+  const auth = useAuth();
+
   // eslint-disable-next-line react/prop-types
   const render = ({ location }) => (
-    AuthService.isAuthenticated
+    auth.isAuthenticated
       ? children
       : <Redirect to={{ pathname: '/login', state: { from: location } }} />
   );

@@ -1,17 +1,22 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Redirect } from 'react-router-dom';
 
-import AuthService from '../services/AuthService';
+import { useAuth } from '../context/AuthContext';
 
 const LoginPage = () => {
+  const auth = useAuth();
   const history = useHistory();
   const location = useLocation();
   const defaultState = { from: { pathname: '/' } };
   const { from } = location.state || defaultState;
 
+  if (auth.isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
   const login = () => {
-    AuthService
-      .authenticate()
+    auth
+      .signin()
       .then(() => history.replace(from))
       .catch(() => {}); // noop
   };
