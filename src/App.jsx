@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 
+import AuthenticatedRoute from './components/AuthenticatedRoute';
 import LoginPage from './pages/LoginPage';
 import SearchPage from './pages/SearchPage';
 
@@ -17,9 +18,9 @@ export default function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
-          <Route exact path="/">
+          <AuthenticatedRoute exact path="/">
             <SearchPage />
-          </Route>
+          </AuthenticatedRoute>
           <Route path="*">
             <Redirect to="/" />
           </Route>
