@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
+  Redirect,
   Route,
 } from 'react-router-dom';
 
@@ -16,8 +17,11 @@ export default function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <SearchPage />
+          </Route>
+          <Route path="*">
+            <Redirect to="/" />
           </Route>
         </Switch>
       </div>
