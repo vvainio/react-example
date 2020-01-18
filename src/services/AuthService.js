@@ -1,18 +1,13 @@
 const mockPromise = new Promise((resolve) => setTimeout(resolve, 300));
+const mockAuthData = { username: 'Foobar' };
 
 const AuthService = {
-  isAuthenticated: false,
-
-  authenticate() {
-    return mockPromise.then(() => {
-      AuthService.isAuthenticated = true;
-    });
+  signin() {
+    return mockPromise.then((data = mockAuthData) => data);
   },
 
   signout() {
-    return mockPromise.then(() => {
-      AuthService.isAuthenticated = false;
-    });
+    return mockPromise;
   },
 };
 
