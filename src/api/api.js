@@ -4,30 +4,23 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL || '',
 });
 
-const setAuthorizationHeader = (accessToken) => {
-  api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-};
+api.interceptors.request.use((config) => {
+  const { accessToken } = JSON.parse(window.localStorage.getItem('auth')) || {};
+  const { headers } = config;
 
-const clearAuthorizationHeader = () => {
-  delete api.defaults.headers.common.Authorization;
-};
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  return { ...config, headers };
+});
 
 export default {
   authenticateSession(data) {
-    return api
-      .post('/sessions', data)
-      .then((response) => {
-        setAuthorizationHeader(response.accessToken);
-        return response;
-      });
+    return api.post('/sessions', data);
   },
 
   invalidateSession(id) {
-    return api
-      .delete(`/sessions/${id}`)
-      .then((response) => {
-        clearAuthorizationHeader();
-        return response;
-      });
+    return api.delete(`/sessions/${id}`);
   },
 };
