@@ -17,23 +17,21 @@ export default function App() {
   return (
     <AuthProvider>
       <Router>
-        <div>
-          <Header />
-          <Switch>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-            <AuthenticatedRoute exact path="/">
-              <SearchPage />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute exact path="/advancedsearch">
-              <AdvancedSearchPage />
-            </AuthenticatedRoute>
-            <Route path="*">
-              <Redirect to="/" />
-            </Route>
-          </Switch>
-        </div>
+        <Header />
+        <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <AuthenticatedRoute exact path="/">
+            <SearchPage />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute exact path="/advancedsearch">
+            <AdvancedSearchPage />
+          </AuthenticatedRoute>
+          <Route path="*">
+            <Redirect to="/" />
+          </Route>
+        </Switch>
       </Router>
     </AuthProvider>
   );
