@@ -2,34 +2,27 @@ import React from 'react';
 import { useHistory, useLocation, Redirect } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
+import LoginForm from '../components/LoginForm';
 
 const LoginPage = () => {
   const auth = useAuth();
   const history = useHistory();
   const location = useLocation();
-  const defaultState = { from: { pathname: '/' } };
-  const { from } = location.state || defaultState;
 
   if (auth.isAuthenticated) {
     return <Redirect to="/" />;
   }
 
-  const login = () => {
-    auth
-      .signin()
-      .then(() => history.replace(from))
-      .catch(() => {}); // noop
+  const signIn = (data) => {
+    const redirectTo = location.state ? location.state.from : '/';
+
+    return auth
+      .signin(data)
+      .then(() => history.replace(redirectTo));
   };
 
   return (
-    <div>
-      <button
-        type="submit"
-        onClick={login}
-      >
-        Log in
-      </button>
-    </div>
+    <LoginForm onSubmit={signIn} />
   );
 };
 
