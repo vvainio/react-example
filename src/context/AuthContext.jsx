@@ -1,33 +1,33 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import AuthService from '../services/AuthService';
+import api from '../api';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const AuthContext = createContext();
 const LOCAL_STORAGE_KEY = 'auth';
 
 const AuthProvider = (props) => {
-  const [currentUser, setCurrentUser] = useLocalStorage(LOCAL_STORAGE_KEY);
-  const isAuthenticated = !!currentUser;
+  const [data, setData] = useLocalStorage(LOCAL_STORAGE_KEY);
+  const isAuthenticated = !!data;
 
-  const signin = (data) => (
-    AuthService
-      .signin(data)
-      .then((response) => setCurrentUser(response))
+  const authenticate = (params) => (
+    api
+      .authenticateSession(params)
+      .then((response) => setData(response))
   );
 
-  const signout = () => (
-    AuthService
-      .signout()
-      .then(() => setCurrentUser())
+  const invalidate = () => (
+    api
+      .invalidateSession()
+      .then(() => setData())
   );
 
   return (
     <AuthContext.Provider
       {...props} // eslint-disable-line react/jsx-props-no-spreading
       value={{
-        currentUser, isAuthenticated, signin, signout,
+        data, isAuthenticated, authenticate, invalidate,
       }}
     />
   );

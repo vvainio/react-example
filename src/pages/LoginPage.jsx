@@ -13,16 +13,16 @@ const LoginPage = () => {
     return <Redirect to="/" />;
   }
 
-  const signIn = (data) => {
+  const login = (data) => {
     const redirectTo = location.state ? location.state.from : '/';
 
     return auth
-      .signin(data)
+      .authenticate(data)
       .then(() => history.replace(redirectTo));
   };
 
   return (
-    <LoginForm onSubmit={signIn} />
+    <LoginForm onSubmit={login} />
   );
 };
 
