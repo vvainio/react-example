@@ -9,7 +9,7 @@ const Header = () => {
 
   const logout = () => {
     auth
-      .authenticate()
+      .invalidate()
       .then(() => history.push('/login'));
   };
 

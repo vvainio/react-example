@@ -14,12 +14,12 @@ const AuthProvider = (props) => {
   const authenticate = (params) => (
     api
       .authenticateSession(params)
-      .then((response) => setData(response))
+      .then((response) => setData(response.data))
   );
 
   const invalidate = () => (
     api
-      .invalidateSession()
+      .invalidateSession(data.id)
       .then(() => setData())
   );
 

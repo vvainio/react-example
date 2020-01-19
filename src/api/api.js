@@ -1,17 +1,33 @@
-const DEBUG_REJECT = false;
+import axios from 'axios';
 
-const mockPromise = (data) => new Promise((resolve, reject) => (
-  setTimeout(DEBUG_REJECT ? reject : resolve(data), 300)
-));
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URL || '',
+});
 
-const api = {
-  authenticateSession(data) {
-    return mockPromise(data);
-  },
-
-  invalidateSession() {
-    return mockPromise();
-  },
+const setAuthorizationHeader = (accessToken) => {
+  api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 };
 
-export default api;
+const clearAuthorizationHeader = () => {
+  delete api.defaults.headers.common.Authorization;
+};
+
+export default {
+  authenticateSession(data) {
+    return api
+      .post('/sessions', data)
+      .then((response) => {
+        setAuthorizationHeader(response.accessToken);
+        return response;
+      });
+  },
+
+  invalidateSession(id) {
+    return api
+      .delete(`/sessions/${id}`)
+      .then((response) => {
+        clearAuthorizationHeader();
+        return response;
+      });
+  },
+};
