@@ -1,13 +1,16 @@
-const mockPromise = new Promise((resolve) => setTimeout(resolve, 300));
-const mockAuthData = { username: 'Foobar' };
+const DEBUG_REJECT = false;
+
+const mockPromise = () => new Promise((resolve, reject) => (
+  setTimeout(DEBUG_REJECT ? reject : resolve, 300)
+));
 
 const AuthService = {
-  signin() {
-    return mockPromise.then((data = mockAuthData) => data);
+  signin(data) {
+    return mockPromise().then((response = data) => response);
   },
 
   signout() {
-    return mockPromise;
+    return mockPromise();
   },
 };
 
