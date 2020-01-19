@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import AuthService from '../services/AuthService';
@@ -8,29 +8,26 @@ const AuthContext = createContext();
 const LOCAL_STORAGE_KEY = 'auth';
 
 const AuthProvider = (props) => {
-  const [data, setData] = useLocalStorage(LOCAL_STORAGE_KEY);
-  const [error, setError] = useState();
-  const isAuthenticated = !!data;
-  const isError = !!error;
+  const [currentUser, setCurrentUser] = useLocalStorage(LOCAL_STORAGE_KEY);
+  const isAuthenticated = !!currentUser;
 
-  const signin = () => (
+  const signin = (data) => (
     AuthService
-      .signin()
-      .then((response) => setData(response))
-      .catch((err) => setError(err))
+      .signin(data)
+      .then((response) => setCurrentUser(response))
   );
 
   const signout = () => (
     AuthService
       .signout()
-      .then(() => setData())
+      .then(() => setCurrentUser())
   );
 
   return (
     <AuthContext.Provider
       {...props} // eslint-disable-line react/jsx-props-no-spreading
       value={{
-        data, error, isAuthenticated, isError, signin, signout,
+        currentUser, isAuthenticated, signin, signout,
       }}
     />
   );
