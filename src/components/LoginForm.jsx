@@ -4,15 +4,22 @@ import PropTypes from 'prop-types';
 const LoginForm = ({ onSubmit }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    setIsError(false);
+    if (isLoading) return false;
 
-    onSubmit({ username, password }).catch(() => {
-      setIsError(true);
-    });
+    event.preventDefault();
+
+    setIsError(false);
+    setIsLoading(true);
+
+    return onSubmit({ username, password })
+      .catch(() => {
+        setIsError(true);
+        setIsLoading(false);
+      });
   };
 
   const renderError = () => (
@@ -38,7 +45,7 @@ const LoginForm = ({ onSubmit }) => {
         required
       />
 
-      <button type="submit">Log in</button>
+      <button type="submit" disabled={isLoading}>Log in</button>
     </form>
   );
 };
