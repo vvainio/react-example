@@ -7,7 +7,7 @@ const Header = () => {
   const auth = useAuth();
   const history = useHistory();
 
-  const logout = () => {
+  const handleLogout = () => {
     auth
       .invalidate()
       .then(() => history.push('/login'));

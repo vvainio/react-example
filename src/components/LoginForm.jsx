@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+const FORM_FIELDS = {
+  username: '',
+  password: '',
+};
+
 const LoginForm = ({ onSubmit }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState(FORM_FIELDS);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: [event.target.value],
+    });
+  };
 
   const handleSubmit = (event) => {
     if (isLoading) return false;
@@ -15,7 +26,7 @@ const LoginForm = ({ onSubmit }) => {
     setIsError(false);
     setIsLoading(true);
 
-    return onSubmit({ username, password })
+    return onSubmit(formData)
       .catch(() => {
         setIsError(true);
         setIsLoading(false);
@@ -29,19 +40,22 @@ const LoginForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       {isError && renderError()}
+
       <input
         type="text"
+        name="username"
         placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={formData.username}
+        onChange={handleChange}
         required
       />
 
       <input
         type="password"
+        name="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={formData.password}
+        onChange={handleChange}
         required
       />
 

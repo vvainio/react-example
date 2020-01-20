@@ -13,7 +13,7 @@ const LoginPage = () => {
     return <Redirect to="/" />;
   }
 
-  const login = (data) => {
+  const handleLogin = (data) => {
     const redirectTo = location.state ? location.state.from : '/';
 
     return auth
@@ -22,7 +22,7 @@ const LoginPage = () => {
   };
 
   return (
-    <LoginForm onSubmit={login} />
+    <LoginForm onSubmit={handleLogin} />
   );
 };
 
