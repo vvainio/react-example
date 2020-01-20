@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import api from '../api';
+import AuthService from '../services/AuthService';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const AuthContext = createContext();
@@ -12,13 +12,13 @@ const AuthProvider = (props) => {
   const isAuthenticated = !!data;
 
   const authenticate = (params) => (
-    api
+    AuthService
       .authenticateSession(params)
       .then((response) => setData(response.data))
   );
 
   const invalidate = () => (
-    api
+    AuthService
       .invalidateSession(data.id)
       .then(() => setData())
   );

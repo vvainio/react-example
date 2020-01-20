@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const api = axios.create({
+const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL || '',
 });
 
-api.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   const { accessToken } = JSON.parse(window.localStorage.getItem('auth')) || {};
   const { headers } = config;
 
@@ -15,12 +15,4 @@ api.interceptors.request.use((config) => {
   return { ...config, headers };
 });
 
-export default {
-  authenticateSession(data) {
-    return api.post('/sessions', data);
-  },
-
-  invalidateSession(id) {
-    return api.delete(`/sessions/${id}`);
-  },
-};
+export default axiosInstance;
