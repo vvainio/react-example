@@ -14,7 +14,7 @@ const LoginForm = ({ onSubmit }) => {
   const handleChange = (event) => {
     setFormData({
       ...formData,
-      [event.target.name]: [event.target.value],
+      [event.target.name]: event.target.value,
     });
   };
 
