@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 
 import { AuthProvider } from './context/AuthContext';
-import AdvancedSearchPage from './pages/AdvancedSearchPage';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Header from './components/Header';
 import LoginPage from './pages/LoginPage';
@@ -24,9 +23,6 @@ export default function App() {
           </Route>
           <AuthenticatedRoute exact path="/">
             <SearchPage />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute exact path="/advancedsearch">
-            <AdvancedSearchPage />
           </AuthenticatedRoute>
           <Route path="*">
             <Redirect to="/" />

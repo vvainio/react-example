@@ -25,10 +25,7 @@ const Header = () => {
           <Link to="/">Search</Link>
         </li>
         <li>
-          <Link to="/advancedsearch">Advanced search</Link>
-        </li>
-        <li>
-          <button type="submit" onClick={logout}>Log out</button>
+          <button type="submit" onClick={handleLogout}>Log out</button>
         </li>
       </ul>
     </nav>
