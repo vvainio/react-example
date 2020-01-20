@@ -1,4 +1,5 @@
 import axios from 'axios';
+import mockApi from './__debug__/mock-api';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL || '',
@@ -15,4 +16,4 @@ axiosInstance.interceptors.request.use((config) => {
   return { ...config, headers };
 });
 
-export default axiosInstance;
+export default mockApi.IS_ENABLED ? mockApi : axiosInstance;
